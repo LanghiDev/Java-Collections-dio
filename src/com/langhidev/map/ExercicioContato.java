@@ -1,6 +1,7 @@
 package com.langhidev.map;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class ExercicioContato {
     public static void main(String[] args) {
@@ -33,14 +34,15 @@ public class ExercicioContato {
 
         System.out.println("------------Ordem de Telefone------------");
 
-        Set<Map.Entry<Integer, Contato>> listaContatosSet = new TreeSet<>(new ComparatorNumero());
+        Set<Map.Entry<Integer, Contato>> listaContatosSet = new TreeSet<>(Comparator.comparing(contato -> contato.getValue().getNumero()));
         listaContatosSet.addAll(listaContatos.entrySet());
 
         mostrarContatos(listaContatosSet);
 
         System.out.println("------------Ordem de Nome------------");
 
-        Set<Map.Entry<Integer, Contato>> listaContatosSet1 = new TreeSet<>(new ComparatorNomeContato());
+        Set<Map.Entry<Integer, Contato>> listaContatosSet1 = new TreeSet<>(Comparator.comparing(contato -> contato.getValue().getNome()));
+
         listaContatosSet1.addAll(listaContatos.entrySet());
 
         mostrarContatos(listaContatosSet1);
@@ -90,19 +92,5 @@ class Contato {
                 "nome='" + nome + '\'' +
                 ", numero=" + numero +
                 '}';
-    }
-}
-
-class ComparatorNumero implements Comparator<Map.Entry<Integer, Contato>>{
-    @Override
-    public int compare(Map.Entry<Integer, Contato> c1, Map.Entry<Integer, Contato> c2) {
-        return Integer.compare(c1.getValue().getNumero(), c2.getValue().getNumero());
-    }
-}
-
-class ComparatorNomeContato implements Comparator<Map.Entry<Integer, Contato>>{
-    @Override
-    public int compare(Map.Entry<Integer, Contato> c1, Map.Entry<Integer, Contato> c2) {
-        return c1.getValue().getNome().compareToIgnoreCase(c2.getValue().getNome());
     }
 }
